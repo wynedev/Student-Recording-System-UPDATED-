@@ -24,4 +24,21 @@ public class section1 {
    String getEmail(){
        return email;
    }
+
+   // Change info block
+   void setFname(String fname){
+       this.fname = fname;
+   }
+   void setLname(String lname){
+        this.lname = lname;
+   }
+   void setCourse(String course){
+        this.course = course;
+   }
+   void setSection(String section){
+        this.section = section;
+   }
+   void setEmail(String email){
+        this.email = email;
+   }
 }
