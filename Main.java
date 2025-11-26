@@ -2,12 +2,10 @@ package NewSession;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//ArrayList //Student registration
-
 public class Main {
 
     static Scanner sc = new Scanner(System.in);
-    static ArrayList<section1> students = new ArrayList<section1>();
+    static ArrayList<section1> students = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -29,15 +27,9 @@ public class Main {
             sc.nextLine();
 
             switch(choice){
-                case 1 -> {
-                    studentlogin();
-                }
-                case 2 -> {
-                    studentRegister();
-                }
-                case 3-> {
-                    showStudents();
-                }
+                case 1 -> studentlogin();
+                case 2 -> studentRegister();
+                case 3-> showStudents();
                 case 4 -> {
                     System.out.println("You've exited the program...");
                     isRunning = false;
@@ -62,7 +54,7 @@ public class Main {
         String email;
         boolean isFound = false;
 
-        System.out.println("\n***** Student login *****");
+        System.out.println("\n###### Student login ######");
         System.out.print("Enter email to login: ");
         email = sc.nextLine();
 
@@ -78,21 +70,23 @@ public class Main {
                 System.out.println("Student number : " + (i + 1));
                 students.get(i).introduce();
 
+                System.out.println();
                 System.out.println("[1] Delete Account");
-                System.out.println("[2] Exit");
+                System.out.println("[2] Edit information");
+                System.out.println("[3] Exit");
 
-                System.out.print("\nEnter Choice: ");
+                System.out.print("Enter Choice: ");
                 int choice = sc.nextInt();
                 sc.nextLine();
 
                 switch (choice){
                     case 1 -> {
                         students.remove(i);
-                        System.out.println("Account has been deleted...");
+                        System.out.println("\nAccount has been deleted...\n");
+                        return;
                     }
-                    case 2 -> {
-                        break;
-                    }
+                    case 2 -> editInfo(i);
+                    case 3 -> {return;}
                 }
             }
         }
@@ -103,7 +97,7 @@ public class Main {
     static void studentRegister(){
         String fname,lname,email,course,section;
 
-        System.out.println("\n***** Register *****");
+        System.out.println("\n###### Register ######");
 
         System.out.print("First name : ");
         fname = sc.nextLine();
@@ -136,6 +130,70 @@ public class Main {
         else{
             System.out.println("Invalid Email...");
             return false;
+        }
+    }
+    static void editInfo(int i){
+        int choice;
+
+        System.out.println("\n###### Edit Information ######");
+        System.out.println("[1] Name");
+        System.out.println("[2] Course");
+        System.out.println("[3] Section");
+        System.out.println("[4] Email");
+        System.out.print("Select info to edit: ");
+        choice = sc.nextInt();
+        sc.nextLine();
+
+        switch (choice){
+            case 1 -> {
+                System.out.print("Enter new first name: ");
+                String fname = sc.nextLine();
+                System.out.print("Enter new last name: ");
+                String lname = sc.nextLine();
+
+                students.get(i).setFname(fname);
+                students.get(i).setLname(lname);
+
+                System.out.println("\nName Updated!!!\n");
+            }
+            case 2 -> {
+                System.out.print("Enter new course: ");
+                String course = sc.nextLine();
+
+                students.get(i).setCourse(course);
+
+                System.out.println("\nCourse updated!!!\n");
+            }
+            case 3 -> {
+                System.out.print("Enter new section: ");
+                String section = sc.nextLine();
+
+                students.get(i).setSection(section);
+
+                System.out.println("\nSection has been updated!!!\n");
+            }
+            case 4 -> {
+                boolean isRunning = true;
+
+                do{
+                    System.out.print("Enter new email: ");
+                    String email = sc.nextLine();
+
+                    boolean valid = false;
+
+                    valid = checkEmail(email);
+
+                    if(valid){
+                        System.out.println("Valid Email!!");
+                        students.get(i).setEmail(email);
+                        System.out.println("\nEmail has been updated!!!\n");
+                        isRunning = false;
+                    }
+                    else{
+                        System.out.println("\nInvalid email!!!\n");
+                    }
+                }while(isRunning);
+            }
         }
     }
 }
